@@ -79,6 +79,23 @@ Visitors can generate course-fee and facility income. Larger crowds may later
 also create capacity, service, and maintenance pressures. Lifetime visitors may
 be recorded as statistics, but should not replace the current visitor flow.
 
+## Time and Offline Progression
+
+The park uses asynchronous progression based on real elapsed time. The park
+continues to exist while its owner is offline, and eligible activities may
+continue to generate results.
+
+The local version will eventually store a `lastProcessedAt` timestamp and
+calculate elapsed production when the game is loaded. The online version will
+use server time and process the park when it is accessed or affected by an
+authoritative server operation. The system should not require a continuously
+running timer for every park.
+
+Scheduled background jobs may later be used for global deadlines, seasons,
+notifications, or other events that must occur without a park being accessed.
+Offline limits and exactly which activities continue while offline remain game
+balance decisions.
+
 ## Course Design
 
 The player should be able to create a course whose characteristics matter. Hole
@@ -199,19 +216,19 @@ without conditions.
 The systems will be introduced in small playable increments:
 
 1. In-game currency and construction costs.
-2. A simple operating cycle with visitors, course fees, and income.
-3. Park reputation.
-4. Basic course-design choices and course characteristics.
-5. Facility upgrades and additional park content.
-6. Player development and competitions.
-7. Park and player sponsorship contracts.
+2. Hourly visitor and course-fee calculations.
+3. Versioned local persistence and offline progression.
+4. Park reputation.
+5. Basic course-design choices and course characteristics.
+6. Facility upgrades and additional park content.
+7. Player development and competitions.
+8. Park and player sponsorship contracts.
 
 This order may change when playtesting reveals a better dependency, but several
 systems should not be implemented simultaneously in one issue.
 
 ## Open Design Decisions
 
-- Whether the initial operating cycle advances by explicit game days or real time.
 - The final course-design categories and how they are calculated.
 - Whether course fees are fixed, upgrade-based, or chosen by the player.
 - How price, capacity, reputation, and course quality determine visitor demand.
