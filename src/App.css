@@ -92,6 +92,18 @@
   text-align: center;
 }
 
+.birdie-bucks {
+  margin: 0 1rem 1rem auto;
+  padding: 1rem;
+  border: 1px solid #39734d;
+  border-radius: 8px;
+  background-color: #f4f8f1;
+  color: #17331f;
+  font-weight: 600;
+  text-align: right;
+  width: fit-content;
+}
+
 @media (max-width: 600px) {
   .holes {
     grid-template-columns: repeat(2, minmax(0, 1fr));

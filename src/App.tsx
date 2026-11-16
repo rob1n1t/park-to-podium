@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { buildNextHole } from './domain/park'
+import { buildNextHole, HOLE_CONSTRUCTION_COST } from './domain/park'
 import type {
   Course,
   Facility,
@@ -8,6 +8,8 @@ import type {
   ParkItem
 } from './domain/park'
 import './App.css'
+
+const STARTING_BIRDIE_BUCKS = 9000
 
 const holes: Hole[] = []
 
@@ -33,6 +35,7 @@ const clubhouse: Facility = {
 const initialPark: Park = {
   course: course,
   facilities: [clubhouse, ...facilities],
+  birdieBucks: STARTING_BIRDIE_BUCKS,
 }
 
 function App() {
@@ -41,6 +44,7 @@ function App() {
   return (
     <main>
       <h1>Park to Podium</h1>
+      <p className="birdie-bucks">Birdie Bucks: {park.birdieBucks}</p>
       <section className="park">
         <h2>Disc Golf Park</h2>
         <div className="holes">
@@ -55,6 +59,7 @@ function App() {
 
               <button
                 type="button"
+                disabled={park.birdieBucks < HOLE_CONSTRUCTION_COST}
                 onClick={() =>
                   setPark((currentPark) => buildNextHole(currentPark))
                 }
@@ -62,6 +67,8 @@ function App() {
                 {park.course.holes.length === 0
                   ? 'Build first hole'
                   : 'Build next hole'}
+                {' - '}
+                {HOLE_CONSTRUCTION_COST} Birdie Bucks
               </button>
             </div>
           )}

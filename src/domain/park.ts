@@ -20,11 +20,15 @@ export type Course = {
 export type Park = {
   course: Course
   facilities: Facility[]
+  birdieBucks: number
 }
+
+export const HOLE_CONSTRUCTION_COST = 1000
 
 export function buildNextHole(currentPark: Park): Park {
   if (
-    currentPark.course.holes.length >= currentPark.course.capacity
+    currentPark.course.holes.length >= currentPark.course.capacity ||
+    currentPark.birdieBucks < HOLE_CONSTRUCTION_COST
   ) {
     return currentPark
   }
@@ -38,6 +42,7 @@ export function buildNextHole(currentPark: Park): Park {
 
   return {
     ...currentPark,
+    birdieBucks: currentPark.birdieBucks - HOLE_CONSTRUCTION_COST,
     course: {
       ...currentPark.course,
       holes: [...currentPark.course.holes, nextHole],

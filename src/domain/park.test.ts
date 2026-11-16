@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildNextHole, type Park } from './park'
+import { buildNextHole, HOLE_CONSTRUCTION_COST, type Park } from './park'
 
 describe('buildNextHole', () => {
     it('builds Hole 1 on an empty course', () => {
@@ -9,6 +9,7 @@ describe('buildNextHole', () => {
                 capacity: 9,
             },
             facilities: [],
+            birdieBucks: HOLE_CONSTRUCTION_COST,
         }
 
         const result = buildNextHole(park)
@@ -34,6 +35,7 @@ describe('buildNextHole', () => {
                 capacity: 9,
             },
             facilities: [],
+            birdieBucks: HOLE_CONSTRUCTION_COST,
         }
         const result = buildNextHole(park)
         expect(result.course.holes).toHaveLength(2)
@@ -51,6 +53,7 @@ describe('buildNextHole', () => {
                 capacity: 9,
             },
             facilities: [],
+            birdieBucks: HOLE_CONSTRUCTION_COST * 10,
         }
 
         for (let index = 0; index < 10; index += 1) {
@@ -69,6 +72,7 @@ describe('buildNextHole', () => {
             'hole-8',
             'hole-9',
         ])
+        expect(park.birdieBucks).toBe(HOLE_CONSTRUCTION_COST)
     })
 
     it('does not mutate the original park', () => {
@@ -78,6 +82,7 @@ describe('buildNextHole', () => {
                 capacity: 9,
             },
             facilities: [],
+            birdieBucks: HOLE_CONSTRUCTION_COST,
         }
 
         const result = buildNextHole(park)
@@ -87,5 +92,36 @@ describe('buildNextHole', () => {
         expect(result).not.toBe(park)
         expect(result.course).not.toBe(park.course)
         expect(result.course.holes).not.toBe(park.course.holes)
+    })
+
+    it('deducts the construction cost when building a hole', () => {
+        const park: Park = {
+            course: {
+                holes: [],
+                capacity: 9,
+            },
+            facilities: [],
+            birdieBucks: HOLE_CONSTRUCTION_COST,
+        }
+
+        const result = buildNextHole(park)
+        expect(result.birdieBucks).toBe(0)
+        expect(park.birdieBucks).toBe(HOLE_CONSTRUCTION_COST)
+    })
+
+    it('does not build when Birdie Bucks are insufficient', () => {
+        const park: Park = {
+            course: {
+                holes: [],
+                capacity: 9,
+            },
+            facilities: [],
+            birdieBucks: HOLE_CONSTRUCTION_COST - 1,
+        }
+
+        const result = buildNextHole(park)
+        expect(result).toBe(park)
+        expect(result.course.holes).toHaveLength(0)
+        expect(result.birdieBucks).toBe(HOLE_CONSTRUCTION_COST - 1)
     })
 })

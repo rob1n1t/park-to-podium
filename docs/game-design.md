@@ -29,8 +29,8 @@ number automatically better.
 
 ## Economy
 
-The park has one primary in-game currency. Its technical name may remain
-`funds`, while its player-facing name is still to be decided.
+The park's in-game currency is Birdie Bucks.
+It is represented as `birdieBucks` in the domain model.
 
 The currency is used to:
 
@@ -211,7 +211,6 @@ systems should not be implemented simultaneously in one issue.
 
 ## Open Design Decisions
 
-- The player-facing name of the in-game currency.
 - Whether the initial operating cycle advances by explicit game days or real time.
 - The final course-design categories and how they are calculated.
 - Whether course fees are fixed, upgrade-based, or chosen by the player.
